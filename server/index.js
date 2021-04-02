@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import postRoute from "./route/posts.js";
+import userRoute from "./route/users.js";
 
 const app = express();
 
@@ -16,8 +17,8 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
 // middleware setup
-
 app.use("/posts", postRoute);
+app.use("/user", userRoute);
 
 const PORT = process.env.PORT || 5000;
 
