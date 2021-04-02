@@ -2,9 +2,9 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
 import postRoute from "./route/posts.js";
 
@@ -22,8 +22,7 @@ app.use("/posts", postRoute);
 const PORT = process.env.PORT || 5000;
 
 mongoose
-  .connect(process.env.
-    CONNECTION_URL, {
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
