@@ -6,15 +6,16 @@ const postSchema = mongoose.Schema({
   creator: String,
   tags: [String],
   selectedFile: [String],
-  likeCount: {
-    type: Number,
-    default: 0,
+  likes: {
+    type: [String],
+    default: [],
   },
   createdAt: {
     type: Date,
     default: new Date(),
   },
 });
+// Biên dịch mô hình từ schema
 
 const PostMessage = mongoose.model("PostMessage", postSchema);
 
