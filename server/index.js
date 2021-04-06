@@ -18,7 +18,7 @@ app.use(cors());
 
 // middleware setup
 app.use("/posts", postRoute);
-app.use("/user", userRoute);
+app.use("/user", userRoute); 
 
 const PORT = process.env.PORT || 5000;
 

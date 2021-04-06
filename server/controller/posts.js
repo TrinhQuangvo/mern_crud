@@ -2,14 +2,20 @@ import mongoose from "mongoose";
 import PostMessage from "./../model/postMessage.js";
 
 export const getPosts = async (req, res) => {
+  let perPage = 10;
+  let page = req.params.page || 1;
   try {
-    const postMessage = await PostMessage.find();
+    const postMessage = await PostMessage.find()
+      .skip(perPage * page - perPage)
+      .limit(perPage);
 
     res.status(200).json(postMessage);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
+export const getPostsPagination = async (req, res) => {};
 
 export const createPost = async (req, res) => {
   const post = req.body;
@@ -20,7 +26,6 @@ export const createPost = async (req, res) => {
   });
   try {
     await newPost.save();
-    
     res.status(201).json(newPost);
   } catch (error) {
     res.status(409).json({ message: error.message });
