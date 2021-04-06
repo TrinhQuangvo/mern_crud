@@ -12,9 +12,8 @@ import auth from "./../middleware/auth.js";
 // import PostMessage from "./../model/postMessage.js";
 
 const router = express.Router();
-
+ 
 router.get("/", getPosts);
-router.get("/:page", getPostsPagination);
 router.post("/", auth, createPost);
 router.patch("/:id", auth, updatePost);
 router.delete("/:id", auth, deletePost);
