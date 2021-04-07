@@ -10,17 +10,25 @@ export const getPosts = async (req, res) => {
     const postMessage = await PostMessage.find()
       .skip(limit * page - limit)
       .limit(limit);
-
-    res.status(200).json({ 
+    const totalPage = Math.trunc(allPost.length / 10 + 1);
+    res.status(200).json({
+      count: allPost.length,
       currentPage: parseInt(page),
-      totalPage: Math.trunc(allPost.length / 10 + 1),
+      nextPage: parseInt(page) >= totalPage ? totalPage : parseInt(page) + 1,
+      prevPage:
+        parseInt(page) <= 1
+          ? 1
+          : parseInt(page) - 1 >= totalPage
+          ? totalPage - 1
+          : parseInt(page) - 1,
+      totalPage: totalPage,
       postMessage,
     });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
- 
+
 export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new PostMessage({
