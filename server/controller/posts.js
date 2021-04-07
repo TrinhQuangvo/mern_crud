@@ -4,20 +4,23 @@ import PostMessage from "./../model/postMessage.js";
 export const getPosts = async (req, res) => {
   let limit = 10;
   let page = req.query.page || 1;
-  
+
   try {
+    const allPost = await PostMessage.find();
     const postMessage = await PostMessage.find()
       .skip(limit * page - limit)
       .limit(limit);
 
-    res.status(200).json({ total: postMessage.length, postMessage });
+    res.status(200).json({ 
+      currentPage: parseInt(page),
+      totalPage: Math.trunc(allPost.length / 10 + 1),
+      postMessage,
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
-
-export const getPostsPagination = async (req, res) => {};
-
+ 
 export const createPost = async (req, res) => {
   const post = req.body;
   const newPost = new PostMessage({

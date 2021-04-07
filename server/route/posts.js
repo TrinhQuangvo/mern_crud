@@ -4,8 +4,7 @@ import {
   createPost,
   updatePost,
   deletePost,
-  likePost,
-  getPostsPagination,
+  likePost, 
 } from "./../controller/posts.js";
 import auth from "./../middleware/auth.js";
 // import faker from "faker";
