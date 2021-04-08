@@ -4,15 +4,18 @@ import {
   createPost,
   updatePost,
   deletePost,
-  likePost, 
+  likePost,
+  getSearchPosts,
 } from "./../controller/posts.js";
 import auth from "./../middleware/auth.js";
 // import faker from "faker";
 // import PostMessage from "./../model/postMessage.js";
 
 const router = express.Router();
- 
+
 router.get("/", getPosts);
+router.get("/search", getSearchPosts);
+
 router.post("/", auth, createPost);
 router.patch("/:id", auth, updatePost);
 router.delete("/:id", auth, deletePost);
