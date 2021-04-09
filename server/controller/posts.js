@@ -34,29 +34,27 @@ export const getPosts = async (req, res) => {
 
 export const getSearchPosts = async (req, res) => {
   let q = req.query.q;
-  let page = req.query.page || 1;
+  let currentPage = parseInt(req.query.page) || 1;
   let limit = 10;
   try {
+    const totalItems = await PostMessage.find({
+      message: { $regex: ".*" + q + ".*" },
+    });
     const getSearchPosts = await PostMessage.find({
       message: { $regex: ".*" + q + ".*" },
     })
-      .skip(limit * page - limit)
+      .skip(limit * currentPage - limit)
       .limit(10);
 
-    const totalPage = Math.trunc(getSearchPosts.length / 10 + 1);
+    const totalPage = Math.trunc(totalItems.length / 10 + 1);
     const countItems = getSearchPosts.length;
 
-    res.status(201).json({
+    res.status(200).json({
+      totalItems: totalItems.length,
       count: countItems,
-      err: countItems === 0 ? "Sorry We're Not Found Any Items" : "",
-      currentPage: page,
-      nextPage: parseInt(page) >= totalPage ? totalPage : parseInt(page) + 1,
-      prevPage:
-        parseInt(page) <= 1
-          ? 1
-          : parseInt(page) - 1 >= totalPage
-          ? totalPage - 1
-          : parseInt(page) - 1,
+      currentPage: currentPage,
+      prevPage: currentPage <= totalPage ? totalPage - (totalPage - currentPage + 1) : currentPage - 1,
+      nextPage: currentPage >= totalPage ? totalPage : currentPage + 1,
       totalPage: totalPage,
       getSearchPosts,
     });
