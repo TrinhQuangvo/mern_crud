@@ -53,7 +53,10 @@ export const getSearchPosts = async (req, res) => {
       totalItems: totalItems.length,
       count: countItems,
       currentPage: currentPage,
-      prevPage: currentPage <= totalPage ? totalPage - (totalPage - currentPage + 1) : currentPage - 1,
+      prevPage:
+        currentPage <= totalPage
+          ? totalPage - (totalPage - currentPage + 1)
+          : currentPage - 1,
       nextPage: currentPage >= totalPage ? totalPage : currentPage + 1,
       totalPage: totalPage,
       getSearchPosts,
@@ -64,11 +67,12 @@ export const getSearchPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const post = req.body;
+  const post = req.body;  
   const newPost = new PostMessage({
     ...post,
     creator: req.userId,
     createdAt: new Date().toISOString(),
+    error: error,
   });
   try {
     await newPost.save();
